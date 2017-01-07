@@ -183,4 +183,6 @@ PRODUCT_BUILD_PROP_OVERRIDES += BUILD_VERSION_TAGS=release-keys USER=android-bui
 # Google Pixel UI
 -include vendor/overlay/bass/configs/common.mk
 
+$(call inherit-product-if-exists, vendor/bass/prebuilt/common/app/Android.mk)
+$(call inherit-product-if-exists, vendor/bass/prebuilt/common/privapp/Android.mk)
 $(call prepend-product-if-exists, vendor/extra/product.mk)
