@@ -4,4 +4,4 @@
 #
 
 BOARD_SEPOLICY_DIRS += \
-    vendor/aoscp/sepolicy
+    vendor/bass/sepolicy

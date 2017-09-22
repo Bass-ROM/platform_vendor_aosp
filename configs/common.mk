@@ -1,34 +1,34 @@
-PRODUCT_BRAND ?= aoscp
+PRODUCT_BRAND ?= bass
 
 # Include versioning information
 # Format: Major.minor.maintenance(-TAG)
-export AOSCP_VERSION := 5.0
-export AOSCP_API_LEVEL := Funnel Cake
-export AOSCP_RELEASE := OFU-5x0.0$(shell date -u +%m%d)MJ
+export BASS_VERSION := 1.0
+export BASS_API_LEVEL := F#
+export BASS_RELEASE := OFU-5x0.0$(shell date -u +%m%d)MJ
 
-AOSCP_DISPLAY_VERSION := $(AOSCP_VERSION)
+BASS_DISPLAY_VERSION := $(BASS_VERSION)
 
-export ROM_VERSION := $(AOSCP_VERSION)-$(shell date -u +%Y%m%d)
+export ROM_VERSION := $(BASS_VERSION)-$(shell date -u +%Y%m%d)
 
 ifneq ($(RELEASE_TYPE),)
-    AOSCP_BUILDTYPE := $(RELEASE_TYPE)
+    BASS_BUILDTYPE := $(RELEASE_TYPE)
 endif
 
 #We build unofficial by default
-ifndef AOSCP_BUILDTYPE
-    AOSCP_BUILDTYPE := unofficial
+ifndef BASS_BUILDTYPE
+    BASS_BUILDTYPE := unofficial
 endif
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.modversion=$(ROM_VERSION) \
-    ro.aoscp.version=$(AOSCP_VERSION) \
-	ro.aoscp.release=$(AOSCP_RELEASE) \
-    ro.aoscp.device=$(AOSCP_DEVICE) \
-    ro.aoscp.display.version=$(AOSCP_DISPLAY_VERSION) \
-    ro.aoscp.releasetype=$(AOSCP_BUILDTYPE) \
-    ro.aoscp.api=$(AOSCP_API_LEVEL)
+    ro.bass.version=$(BASS_VERSION) \
+	ro.bass.release=$(BASS_RELEASE) \
+    ro.bass.device=$(BASS_DEVICE) \
+    ro.bass.display.version=$(BASS_DISPLAY_VERSION) \
+    ro.bass.releasetype=$(BASS_BUILDTYPE) \
+    ro.bass.api=$(BASS_API_LEVEL)
 
-export AOSCP_TARGET_ZIP := aoscp_$(AOSCP_BUILD)-$(AOSCP_RELEASE)-$(AOSCP_BUILDTYPE)
+export BASS_TARGET_ZIP := bass_$(BASS_BUILD)-$(BASS_RELEASE)-$(BASS_BUILDTYPE)
 
 ifneq ($(TARGET_SCREEN_WIDTH) $(TARGET_SCREEN_HEIGHT),$(space))
 # determine the smaller dimension
@@ -40,7 +40,7 @@ TARGET_BOOTANIMATION_SIZE := $(shell \
   fi )
 
 # get a sorted list of the sizes
-bootanimation_sizes := $(subst .zip,, $(shell ls vendor/aoscp/prebuilt/bootanimation))
+bootanimation_sizes := $(subst .zip,, $(shell ls vendor/bass/prebuilt/bootanimation))
 bootanimation_sizes := $(shell echo -e $(subst $(space),'\n',$(bootanimation_sizes)) | sort -rn)
 
 # find the appropriate size and set
@@ -57,9 +57,9 @@ endef
 $(foreach size,$(bootanimation_sizes), $(call check_and_set_bootanimation,$(size)))
 
 ifeq ($(TARGET_BOOTANIMATION_HALF_RES),true)
-PRODUCT_BOOTANIMATION := vendor/aoscp/prebuilt/bootanimation/halfres/$(TARGET_BOOTANIMATION_NAME).zip
+PRODUCT_BOOTANIMATION := vendor/bass/prebuilt/bootanimation/halfres/$(TARGET_BOOTANIMATION_NAME).zip
 else
-PRODUCT_BOOTANIMATION := vendor/aoscp/prebuilt/bootanimation/$(TARGET_BOOTANIMATION_NAME).zip
+PRODUCT_BOOTANIMATION := vendor/bass/prebuilt/bootanimation/$(TARGET_BOOTANIMATION_NAME).zip
 endif
 endif
 
@@ -101,49 +101,49 @@ endif
 
 # Backup Tool
 PRODUCT_COPY_FILES += \
-    vendor/aoscp/prebuilt/common/bin/backuptool.sh:install/bin/backuptool.sh \
-    vendor/aoscp/prebuilt/common/bin/backuptool.functions:install/bin/backuptool.functions \
-    vendor/aoscp/prebuilt/common/bin/50-aoscp.sh:system/addon.d/50-aoscp.sh \
-    vendor/aoscp/prebuilt/common/bin/blacklist:system/addon.d/blacklist \
-    vendor/aoscp/prebuilt/common/bin/99-backup.sh:system/addon.d/99-backup.sh \
-    vendor/aoscp/prebuilt/common/etc/backup.conf:system/etc/backup.conf
+    vendor/bass/prebuilt/common/bin/backuptool.sh:install/bin/backuptool.sh \
+    vendor/bass/prebuilt/common/bin/backuptool.functions:install/bin/backuptool.functions \
+    vendor/bass/prebuilt/common/bin/50-bass.sh:system/addon.d/50-bass.sh \
+    vendor/bass/prebuilt/common/bin/blacklist:system/addon.d/blacklist \
+    vendor/bass/prebuilt/common/bin/99-backup.sh:system/addon.d/99-backup.sh \
+    vendor/bass/prebuilt/common/etc/backup.conf:system/etc/backup.conf
 
 # Backup Services whitelist
 PRODUCT_COPY_FILES += \
-    vendor/aoscp/configs/permissions/backup.xml:system/etc/sysconfig/backup.xml
+    vendor/bass/configs/permissions/backup.xml:system/etc/sysconfig/backup.xml
 
 # Signature compatibility validation
 PRODUCT_COPY_FILES += \
-    vendor/aoscp/prebuilt/common/bin/otasigcheck.sh:install/bin/otasigcheck.sh
+    vendor/bass/prebuilt/common/bin/otasigcheck.sh:install/bin/otasigcheck.sh
 
 # init.d support
 PRODUCT_COPY_FILES += \
-    vendor/aoscp/prebuilt/common/etc/init.d/00start:system/etc/init.d/00start \
-    vendor/aoscp/prebuilt/common/etc/init.d/01sysctl:system/etc/init.d/01sysctl \
-    vendor/aoscp/prebuilt/common/etc/sysctl.conf:system/etc/sysctl.conf \
-    vendor/aoscp/prebuilt/common/bin/sysinit:system/bin/sysinit
+    vendor/bass/prebuilt/common/etc/init.d/00start:system/etc/init.d/00start \
+    vendor/bass/prebuilt/common/etc/init.d/01sysctl:system/etc/init.d/01sysctl \
+    vendor/bass/prebuilt/common/etc/sysctl.conf:system/etc/sysctl.conf \
+    vendor/bass/prebuilt/common/bin/sysinit:system/bin/sysinit
 
 # userinit support
 ifneq ($(TARGET_BUILD_VARIANT),user)
 PRODUCT_COPY_FILES += \
-    vendor/aoscp/prebuilt/common/etc/init.d/90userinit:system/etc/init.d/90userinit
+    vendor/bass/prebuilt/common/etc/init.d/90userinit:system/etc/init.d/90userinit
 endif
 
-# AOSCP-specific init file
+# BASS-specific init file
 PRODUCT_COPY_FILES += \
-    vendor/aoscp/prebuilt/common/etc/init.local.rc:root/init.aoscp.rc \
+    vendor/bass/prebuilt/common/etc/init.local.rc:root/init.bass.rc \
 
 # Installer
 PRODUCT_COPY_FILES += \
-    vendor/aoscp/prebuilt/common/bin/persist.sh:install/bin/persist.sh \
-    vendor/aoscp/prebuilt/common/etc/persist.conf:system/etc/persist.conf
+    vendor/bass/prebuilt/common/bin/persist.sh:install/bin/persist.sh \
+    vendor/bass/prebuilt/common/etc/persist.conf:system/etc/persist.conf
 
 PRODUCT_COPY_FILES += \
-    vendor/aoscp/prebuilt/common/etc/resolv.conf:system/etc/resolv.conf
+    vendor/bass/prebuilt/common/etc/resolv.conf:system/etc/resolv.conf
 
 # Copy over added mimetype supported in libcore.net.MimeUtils
 PRODUCT_COPY_FILES += \
-    vendor/aoscp/prebuilt/common/lib/content-types.properties:system/lib/content-types.properties
+    vendor/bass/prebuilt/common/lib/content-types.properties:system/lib/content-types.properties
 
 # Enable SIP+VoIP on all targets
 PRODUCT_COPY_FILES += \
@@ -154,7 +154,7 @@ PRODUCT_COPY_FILES += \
     frameworks/base/data/keyboards/Vendor_045e_Product_028e.kl:system/usr/keylayout/Vendor_045e_Product_0719.kl
 
 PRODUCT_COPY_FILES += \
-    vendor/aoscp/configs/permissions/com.aoscp.android.xml:system/etc/permissions/com.aoscp.android.xml
+    vendor/bass/configs/permissions/com.bass.android.xml:system/etc/permissions/com.bass.android.xml
 
 # ExFAT support
 WITH_EXFAT ?= true
@@ -171,16 +171,16 @@ PRODUCT_PROPERTY_OVERRIDES += \
     media.sf.extractor-plugin=libffmpeg_extractor.so
 
 # Common overlay
-DEVICE_PACKAGE_OVERLAYS += vendor/aoscp/overlay/common
+DEVICE_PACKAGE_OVERLAYS += vendor/bass/overlay/common
 
 # Version information used on all builds
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_VERSION_TAGS=release-keys USER=android-build BUILD_UTC_DATE=$(shell date +"%s")
 
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
--include vendor/aoscp/configs/partner_gms.mk
--include vendor/aoscp/configs/common_packages.mk
+-include vendor/bass/configs/partner_gms.mk
+-include vendor/bass/configs/common_packages.mk
 
 # Google Pixel UI
--include vendor/overlay/aoscp/configs/common.mk
+-include vendor/overlay/bass/configs/common.mk
 
 $(call prepend-product-if-exists, vendor/extra/product.mk)

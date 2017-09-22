@@ -1,10 +1,10 @@
-# Inherit common AOSCP stuff
-$(call inherit-product, vendor/aoscp/configs/common.mk)
+# Inherit common BASS stuff
+$(call inherit-product, vendor/bass/configs/common.mk)
 
 PRODUCT_SIZE := full
 
-# Include AOSCP LatinIME dictionaries
-PRODUCT_PACKAGE_OVERLAYS += vendor/aoscp/overlay/dictionaries
+# Include BASS LatinIME dictionaries
+PRODUCT_PACKAGE_OVERLAYS += vendor/bass/overlay/dictionaries
 
 PRODUCT_PACKAGES += \
     VideoEditor \

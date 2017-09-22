@@ -1,4 +1,4 @@
-# Inherit common CM stuff
-$(call inherit-product, vendor/aoscp/configs/common.mk)
+# Inherit common BASS stuff
+$(call inherit-product, vendor/bass/configs/common.mk)
 
 PRODUCT_SIZE := mini

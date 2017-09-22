@@ -18,13 +18,13 @@ PRODUCT_PACKAGES += \
     libprotobuf-cpp-full \
     librsjni
 
-# AOSCP Packages
+# BASS Packages
 PRODUCT_PACKAGES += \
     Bolt \
     Luna \
     WallpaperPicker
 
-# AOSCP Updates
+# BASS Updates
 #PRODUCT_PACKAGES +=  \
     #COTA
    

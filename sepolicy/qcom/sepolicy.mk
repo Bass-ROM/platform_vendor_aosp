@@ -1,2 +1,2 @@
 BOARD_SEPOLICY_DIRS += \
-    vendor/aoscp/sepolicy/qcom
+    vendor/bass/sepolicy/qcom
